@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechnoMind AI - Tools Portfolio</title>
+    <meta name="description" content="Modern AI-powered tools for productivity, finance, document conversion, and more. Discover powerful utilities to streamline your workflow.">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold">⚡</span>
+                    </div>
+                    <h1 class="text-xl font-bold text-gray-800">TechnoMind AI</h1>
+                </div>
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="#tools" class="text-gray-600 hover:text-blue-600 transition-colors">Tools</a>
+                    <a href="#about" class="text-gray-600 hover:text-blue-600 transition-colors">About</a>
+                    <a href="#contact" class="text-gray-600 hover:text-blue-600 transition-colors">Contact</a>
+                    <a href="https://github.com/wdranjeet/technomindai.in" target="_blank" class="text-gray-600 hover:text-blue-600 transition-colors">
+                        <span class="text-xl">📂</span>
+                    </a>
+                </div>
+                <button id="mobile-menu-btn" class="md:hidden">
+                    <span class="text-2xl text-gray-600">☰</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg">
+        <div class="container mx-auto px-4 py-4 space-y-3">
+            <a href="#tools" class="block text-gray-600 hover:text-blue-600 transition-colors">Tools</a>
+            <a href="#about" class="block text-gray-600 hover:text-blue-600 transition-colors">About</a>
+            <a href="#contact" class="block text-gray-600 hover:text-blue-600 transition-colors">Contact</a>
+            <a href="https://github.com/wdranjeet/technomindai.in" target="_blank" class="block text-gray-600 hover:text-blue-600 transition-colors">
+                GitHub Repository
+            </a>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="gradient-bg text-white py-20">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-5xl md:text-6xl font-bold mb-6">
+                Modern Tools for
+                <span class="hero-gradient">
+                    Digital Life
+                </span>
+            </h1>
+            <p class="text-xl md:text-2xl mb-8 text-blue-100 max-w-3xl mx-auto">
+                Discover powerful, AI-enhanced tools to boost your productivity, manage finances, convert documents, and streamline your workflow.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#tools" class="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors">
+                    Explore Tools
+                </a>
+                <a href="#featured" class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors">
+                    View Featured
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search Section -->
+    <section class="py-12 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-2xl mx-auto">
+                <div class="relative">
+                    <input 
+                        type="text" 
+                        id="tool-search"
+                        placeholder="Search tools by name or category..." 
+                        class="w-full px-6 py-4 pl-12 text-lg border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                    >
+                    <span class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl">🔍</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Tools Section -->
+    <section id="featured" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">Featured Tools</h2>
+                <p class="text-gray-600 text-lg">Discover our most popular and recently added tools</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <!-- Word Counter Tool -->
+                <div class="bg-white rounded-2xl shadow-lg p-6 card-hover">
+                    <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-4">
+                        <span class="text-blue-600 text-2xl">📝</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Word Counter</h3>
+                    <p class="text-gray-600 mb-4">Count words, characters, paragraphs, and get reading time estimates in real-time.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">Productivity</span>
+                        <a href="word-counter/" class="text-blue-600 hover:text-blue-800 font-semibold">Try Now →</a>
+                    </div>
+                </div>
+
+                <!-- Placeholder Tool 1 -->
+                <div class="bg-white rounded-2xl shadow-lg p-6 card-hover opacity-75">
+                    <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mb-4">
+                        <span class="text-green-600 text-2xl">💰</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Expense Tracker</h3>
+                    <p class="text-gray-600 mb-4">Track your daily expenses and manage your budget with intelligent insights.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">Finance</span>
+                        <span class="text-gray-400 font-semibold">Coming Soon</span>
+                    </div>
+                </div>
+
+                <!-- Placeholder Tool 2 -->
+                <div class="bg-white rounded-2xl shadow-lg p-6 card-hover opacity-75">
+                    <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center mb-4">
+                        <span class="text-purple-600 text-2xl">📄</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">PDF Converter</h3>
+                    <p class="text-gray-600 mb-4">Convert documents to PDF and other formats with high quality output.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium">Documents</span>
+                        <span class="text-gray-400 font-semibold">Coming Soon</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tool Categories Section -->
+    <section id="tools" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">Tool Categories</h2>
+                <p class="text-gray-600 text-lg">Browse tools organized by category</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto" id="categories">
+                <!-- Productivity & Lifestyle -->
+                <div class="bg-gradient-to-br from-blue-50 to-indigo-100 rounded-2xl p-6 card-hover" data-category="productivity">
+                    <div class="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center mb-4">
+                        <span class="text-white text-3xl">⚡</span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-3">Productivity & Lifestyle</h3>
+                    <p class="text-gray-600 mb-4">Boost your productivity with text analysis, time management, and workflow optimization tools.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-blue-600 font-semibold">1 tool available</span>
+                        <span class="text-blue-600 text-xl">→</span>
+                    </div>
+                </div>
+
+                <!-- Financial & Investment -->
+                <div class="bg-gradient-to-br from-green-50 to-emerald-100 rounded-2xl p-6 card-hover" data-category="finance">
+                    <div class="w-16 h-16 bg-green-600 rounded-2xl flex items-center justify-center mb-4">
+                        <span class="text-white text-3xl">📈</span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-3">Financial & Investment</h3>
+                    <p class="text-gray-600 mb-4">Manage your finances with calculators, investment trackers, and budgeting tools.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-green-600 font-semibold">Coming soon</span>
+                        <span class="text-green-600 text-xl">→</span>
+                    </div>
+                </div>
+
+                <!-- Document & File Conversion -->
+                <div class="bg-gradient-to-br from-purple-50 to-violet-100 rounded-2xl p-6 card-hover" data-category="documents">
+                    <div class="w-16 h-16 bg-purple-600 rounded-2xl flex items-center justify-center mb-4">
+                        <span class="text-white text-3xl">📁</span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-3">Document & File Conversion</h3>
+                    <p class="text-gray-600 mb-4">Convert, compress, and manipulate documents and files with ease.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-purple-600 font-semibold">Coming soon</span>
+                        <span class="text-purple-600 text-xl">→</span>
+                    </div>
+                </div>
+
+                <!-- System & Tech Utilities -->
+                <div class="bg-gradient-to-br from-orange-50 to-red-100 rounded-2xl p-6 card-hover" data-category="system">
+                    <div class="w-16 h-16 bg-orange-600 rounded-2xl flex items-center justify-center mb-4">
+                        <span class="text-white text-3xl">⚙️</span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-3">System & Tech Utilities</h3>
+                    <p class="text-gray-600 mb-4">Technical tools for developers, system administrators, and tech enthusiasts.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-orange-600 font-semibold">Coming soon</span>
+                        <span class="text-orange-600 text-xl">→</span>
+                    </div>
+                </div>
+
+                <!-- Expense Management -->
+                <div class="bg-gradient-to-br from-teal-50 to-cyan-100 rounded-2xl p-6 card-hover" data-category="expense">
+                    <div class="w-16 h-16 bg-teal-600 rounded-2xl flex items-center justify-center mb-4">
+                        <span class="text-white text-3xl">💳</span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-3">Expense Management</h3>
+                    <p class="text-gray-600 mb-4">Track expenses, manage budgets, and gain insights into your spending patterns.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-teal-600 font-semibold">Coming soon</span>
+                        <span class="text-teal-600 text-xl">→</span>
+                    </div>
+                </div>
+
+                <!-- AI & Machine Learning -->
+                <div class="bg-gradient-to-br from-pink-50 to-rose-100 rounded-2xl p-6 card-hover" data-category="ai">
+                    <div class="w-16 h-16 bg-pink-600 rounded-2xl flex items-center justify-center mb-4">
+                        <span class="text-white text-3xl">🧠</span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-3">AI & Machine Learning</h3>
+                    <p class="text-gray-600 mb-4">Intelligent tools powered by AI for text processing, data analysis, and automation.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-pink-600 font-semibold">Coming soon</span>
+                        <span class="text-pink-600 text-xl">→</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-4xl font-bold text-gray-800 mb-6">About TechnoMind AI</h2>
+                <p class="text-lg text-gray-600 mb-8">
+                    TechnoMind AI is a curated collection of modern, AI-enhanced tools designed to simplify your digital life. 
+                    From productivity utilities to financial calculators, document converters to system tools - we provide 
+                    powerful, user-friendly solutions that work seamlessly across all devices.
+                </p>
+                <div class="grid md:grid-cols-3 gap-8 mt-12">
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <span class="text-blue-600 text-3xl">🚀</span>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Fast & Efficient</h3>
+                        <p class="text-gray-600">Optimized for speed and performance across all devices</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <span class="text-green-600 text-3xl">🛡️</span>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Privacy Focused</h3>
+                        <p class="text-gray-600">Your data stays private - all processing happens locally</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <span class="text-purple-600 text-3xl">📱</span>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Mobile Ready</h3>
+                        <p class="text-gray-600">Responsive design that works perfectly on any screen size</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="col-span-2">
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
+                            <span class="text-white font-bold">⚡</span>
+                        </div>
+                        <h3 class="text-xl font-bold">TechnoMind AI</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4">
+                        Modern AI-enhanced tools for productivity, finance, document conversion, and more. 
+                        Built with love for the developer community.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="https://github.com/wdranjeet/technomindai.in" target="_blank" class="text-gray-400 hover:text-white transition-colors">
+                            <span class="text-2xl">📂</span>
+                        </a>
+                        <a href="https://technomindai.in" class="text-gray-400 hover:text-white transition-colors">
+                            <span class="text-2xl">🌐</span>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#tools" class="text-gray-400 hover:text-white transition-colors">All Tools</a></li>
+                        <li><a href="#featured" class="text-gray-400 hover:text-white transition-colors">Featured</a></li>
+                        <li><a href="#about" class="text-gray-400 hover:text-white transition-colors">About</a></li>
+                        <li><a href="https://github.com/wdranjeet/technomindai.in/issues" target="_blank" class="text-gray-400 hover:text-white transition-colors">Report Issues</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Categories</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Productivity</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Finance</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Documents</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">System Utils</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 TechnoMind AI. Open source project. Built with ❤️ for the community.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Search functionality
+        const searchInput = document.getElementById('tool-search');
+        const categories = document.querySelectorAll('#categories > div');
+        
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            
+            categories.forEach(category => {
+                const categoryTitle = category.querySelector('h3').textContent.toLowerCase();
+                const categoryDescription = category.querySelector('p').textContent.toLowerCase();
+                
+                if (categoryTitle.includes(searchTerm) || categoryDescription.includes(searchTerm)) {
+                    category.style.display = 'block';
+                } else {
+                    category.style.display = searchTerm === '' ? 'block' : 'none';
+                }
+            });
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    // Hide mobile menu if open
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+
+        // Category click handling
+        categories.forEach(category => {
+            category.addEventListener('click', () => {
+                const categoryName = category.getAttribute('data-category');
+                // In a real implementation, this would navigate to category pages
+                console.log(`Navigating to ${categoryName} category`);
+            });
+        });
+
+        // Add scroll effect to navigation
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('shadow-md');
+            } else {
+                nav.classList.remove('shadow-md');
+            }
+        });
+    </script>
+</body>
+</html>
