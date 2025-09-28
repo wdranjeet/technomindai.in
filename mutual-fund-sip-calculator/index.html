@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mutual Fund SIP Calculator - TechnoMind AI</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold">⚡</span>
+                    </div>
+                    <h1 class="text-xl font-bold text-gray-800">TechnoMind AI</h1>
+                </div>
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="/index.html#tools" class="text-gray-600 hover:text-blue-600 transition-colors">Tools</a>
+                    <a href="/index.html#about" class="text-gray-600 hover:text-blue-600 transition-colors">About</a>
+                    <a href="/index.html#contact" class="text-gray-600 hover:text-blue-600 transition-colors">Contact</a>
+                </div>
+                <button id="mobile-menu-btn" class="md:hidden">
+                    <span class="text-2xl text-gray-600">☰</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg">
+        <div class="container mx-auto px-4 py-4 space-y-3">
+            <a href="/index.html#tools" class="block text-gray-600 hover:text-blue-600 transition-colors">Tools</a>
+            <a href="/index.html#about" class="block text-gray-600 hover:text-blue-600 transition-colors">About</a>
+            <a href="/index.html#contact" class="block text-gray-600 hover:text-blue-600 transition-colors">Contact</a>
+        </div>
+    </div>
+
+    <div class="container mx-auto px-4 max-w-6xl pt-8">
+        <!-- Page Title -->
+        <header class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-gray-800 mb-2">Mutual Fund SIP Calculator</h1>
+            <p class="text-gray-600">Calculate the future value of your Systematic Investment Plan (SIP) investments</p>
+        </header>
+
+        <!-- Main Content -->
+        <div class="grid lg:grid-cols-2 gap-8 mb-8">
+            <!-- Input Panel -->
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">Investment Details</h2>
+                
+                <form id="sip-form" class="space-y-6">
+                    <!-- Monthly Investment -->
+                    <div>
+                        <label for="monthlyInvestment" class="block text-sm font-medium text-gray-700 mb-2">
+                            Monthly Investment Amount (₹)
+                        </label>
+                        <input 
+                            type="number" 
+                            id="monthlyInvestment" 
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            value="5000"
+                            min="500"
+                            max="1000000"
+                            required
+                        >
+                        <p class="text-xs text-gray-500 mt-1">Minimum: ₹500, Maximum: ₹10,00,000</p>
+                    </div>
+
+                    <!-- Expected Annual Return -->
+                    <div>
+                        <label for="annualReturn" class="block text-sm font-medium text-gray-700 mb-2">
+                            Expected Annual Return Rate (%)
+                        </label>
+                        <input 
+                            type="number" 
+                            id="annualReturn" 
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            value="12"
+                            min="1"
+                            max="30"
+                            step="0.1"
+                            required
+                        >
+                        <p class="text-xs text-gray-500 mt-1">Typical range: 8% - 15% for equity funds</p>
+                    </div>
+
+                    <!-- Investment Duration -->
+                    <div>
+                        <label for="investmentPeriod" class="block text-sm font-medium text-gray-700 mb-2">
+                            Investment Period (Years)
+                        </label>
+                        <input 
+                            type="number" 
+                            id="investmentPeriod" 
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            value="10"
+                            min="1"
+                            max="50"
+                            required
+                        >
+                        <p class="text-xs text-gray-500 mt-1">Investment duration in years</p>
+                    </div>
+
+                    <!-- SIP Frequency -->
+                    <div>
+                        <label for="sipFrequency" class="block text-sm font-medium text-gray-700 mb-2">
+                            SIP Frequency
+                        </label>
+                        <select 
+                            id="sipFrequency" 
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        >
+                            <option value="monthly">Monthly</option>
+                            <option value="quarterly">Quarterly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                    </div>
+
+                    <!-- Calculate Button -->
+                    <button 
+                        type="submit" 
+                        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-md transition-colors"
+                    >
+                        Calculate SIP Returns
+                    </button>
+                </form>
+            </div>
+
+            <!-- Results Panel -->
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">Investment Summary</h2>
+                
+                <div id="results" class="space-y-4">
+                    <!-- Total Investment -->
+                    <div class="flex justify-between items-center p-4 bg-blue-50 rounded-lg">
+                        <div>
+                            <p class="text-sm text-gray-600">Total Investment</p>
+                            <p id="totalInvestment" class="text-2xl font-bold text-blue-600">₹6,00,000</p>
+                        </div>
+                        <div class="text-blue-600">
+                            <span class="text-3xl">💰</span>
+                        </div>
+                    </div>
+
+                    <!-- Estimated Returns -->
+                    <div class="flex justify-between items-center p-4 bg-green-50 rounded-lg">
+                        <div>
+                            <p class="text-sm text-gray-600">Estimated Returns</p>
+                            <p id="estimatedReturns" class="text-2xl font-bold text-green-600">₹5,85,887</p>
+                        </div>
+                        <div class="text-green-600">
+                            <span class="text-3xl">📈</span>
+                        </div>
+                    </div>
+
+                    <!-- Total Value -->
+                    <div class="flex justify-between items-center p-4 bg-purple-50 rounded-lg">
+                        <div>
+                            <p class="text-sm text-gray-600">Total Future Value</p>
+                            <p id="totalValue" class="text-2xl font-bold text-purple-600">₹11,85,887</p>
+                        </div>
+                        <div class="text-purple-600">
+                            <span class="text-3xl">🎯</span>
+                        </div>
+                    </div>
+
+                    <!-- Wealth Gained -->
+                    <div class="flex justify-between items-center p-4 bg-orange-50 rounded-lg">
+                        <div>
+                            <p class="text-sm text-gray-600">Wealth Gained</p>
+                            <p id="wealthGained" class="text-xl font-bold text-orange-600">97.6%</p>
+                        </div>
+                        <div class="text-orange-600">
+                            <span class="text-3xl">🚀</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Export Buttons -->
+                <div class="mt-6 grid grid-cols-2 gap-4">
+                    <button 
+                        id="exportPDF" 
+                        class="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-md transition-colors"
+                    >
+                        📄 Export PDF
+                    </button>
+                    <button 
+                        id="exportImage" 
+                        class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-md transition-colors"
+                    >
+                        🖼️ Export Image
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chart Section -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">Investment Growth Over Time</h2>
+            <div class="relative h-96">
+                <canvas id="investmentChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Information Section -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">About SIP Calculator</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-800 mb-3">What is SIP?</h3>
+                    <p class="text-gray-600 mb-4">
+                        Systematic Investment Plan (SIP) is a method of investing in mutual funds where you invest 
+                        a fixed amount at regular intervals. It helps in rupee-cost averaging and disciplined investing.
+                    </p>
+                    <h3 class="text-lg font-semibold text-gray-800 mb-3">Benefits of SIP</h3>
+                    <ul class="text-gray-600 space-y-2">
+                        <li>• Rupee cost averaging</li>
+                        <li>• Power of compounding</li>
+                        <li>• Disciplined investing</li>
+                        <li>• Lower risk through diversification</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-800 mb-3">How is SIP calculated?</h3>
+                    <p class="text-gray-600 mb-4">
+                        Our calculator uses the compound interest formula:<br>
+                        <strong>FV = P × [((1 + r)^n - 1) / r] × (1 + r)</strong>
+                    </p>
+                    <p class="text-gray-600 text-sm">
+                        Where:<br>
+                        FV = Future Value<br>
+                        P = Monthly investment amount<br>
+                        r = Monthly interest rate<br>
+                        n = Number of months
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="col-span-2">
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
+                            <span class="text-white font-bold">⚡</span>
+                        </div>
+                        <h3 class="text-xl font-bold">TechnoMind AI</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4">
+                        Modern AI-enhanced tools for productivity, finance, document conversion, and more. 
+                        Built with love for the developer community.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="https://technomindai.in" class="text-gray-400 hover:text-white transition-colors">
+                            <span class="text-2xl">🌐</span>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/index.html#tools" class="text-gray-400 hover:text-white transition-colors">All Tools</a></li>
+                        <li><a href="/index.html#featured" class="text-gray-400 hover:text-white transition-colors">Featured</a></li>
+                        <li><a href="/index.html#about" class="text-gray-400 hover:text-white transition-colors">About</a></li>                        
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Categories</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Productivity</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Finance</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Documents</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">System Utils</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 TechnoMind AI. Built with ❤️ for the community.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/sip-calculator.js"></script>
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>
