@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Counter App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen py-8">
+    <div class="container mx-auto px-4 max-w-4xl">
+        <!-- Header -->
+        <header class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-gray-800 mb-2">Word Counter</h1>
+            <p class="text-gray-600">Count words, characters, paragraphs, and spaces in real-time</p>
+        </header>
+
+        <!-- Main Content -->
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <!-- Text Input Area -->
+            <div class="mb-6">
+                <label for="textInput" class="block text-sm font-medium text-gray-700 mb-2">
+                    Enter or paste your text here:
+                </label>
+                <textarea 
+                    id="textInput" 
+                    placeholder="Start typing or paste your text here..."
+                    class="w-full h-64 p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none transition-all duration-200"
+                    aria-label="Text input for word counting"
+                ></textarea>
+            </div>
+
+            <!-- Statistics Summary -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                <div class="bg-blue-50 p-4 rounded-lg text-center">
+                    <div class="text-2xl font-bold text-blue-600" id="wordCount">0</div>
+                    <div class="text-sm text-blue-800">Words</div>
+                </div>
+                <div class="bg-green-50 p-4 rounded-lg text-center">
+                    <div class="text-2xl font-bold text-green-600" id="charCount">0</div>
+                    <div class="text-sm text-green-800">Characters</div>
+                </div>
+                <div class="bg-purple-50 p-4 rounded-lg text-center">
+                    <div class="text-2xl font-bold text-purple-600" id="paragraphCount">0</div>
+                    <div class="text-sm text-purple-800">Paragraphs</div>
+                </div>
+                <div class="bg-orange-50 p-4 rounded-lg text-center">
+                    <div class="text-2xl font-bold text-orange-600" id="spaceCount">0</div>
+                    <div class="text-sm text-orange-800">Spaces</div>
+                </div>
+            </div>
+
+            <!-- Additional Stats -->
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm text-gray-600">
+                <div>Characters (no spaces): <span id="charNoSpaceCount" class="font-semibold">0</span></div>
+                <div>Sentences: <span id="sentenceCount" class="font-semibold">0</span></div>
+                <div>Reading time: <span id="readingTime" class="font-semibold">0 min</span></div>
+            </div>
+
+            <!-- Clear Button -->
+            <div class="mt-6 text-center">
+                <button 
+                    id="clearBtn" 
+                    class="bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-6 rounded-lg transition-colors duration-200"
+                >
+                    Clear Text
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
