@@ -1,2 +1,2 @@
 # technomindai.in
-technomindai.in is blogging site 
+technomindai.in is ai tools Web App.
