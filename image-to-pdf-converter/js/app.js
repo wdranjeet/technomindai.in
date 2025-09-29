@@ -1,147 +1,64 @@
-class ImageToPdfConverter {
-    constructor() {
-        this.dropZone = document.getElementById('dropZone');
-        this.fileInput = document.getElementById('fileInput');
-        this.imagePreviewContainer = document.getElementById('imagePreviewContainer');
-        this.imagePreview = document.getElementById('imagePreview');
-        this.clearImagesBtn = document.getElementById('clearImages');
-        this.convertToPdfBtn = document.getElementById('convertToPdf');
-        this.progressContainer = document.getElementById('progressContainer');
-        this.progressBar = document.getElementById('progressBar');
-        this.progressText = document.getElementById('progressText');
-        
-        this.selectedImages = [];
-        this.supportedFormats = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/bmp', 'image/webp'];
-        
-        this.init();
-    }
-
-    init() {
-        // Add event listeners
-        this.dropZone.addEventListener('click', () => this.fileInput.click());
-        this.dropZone.addEventListener('dragover', (e) => this.handleDragOver(e));
-        this.dropZone.addEventListener('drop', (e) => this.handleDrop(e));
-        this.fileInput.addEventListener('change', (e) => this.handleFileSelect(e));
-        this.clearImagesBtn.addEventListener('click', () => this.clearAllImages());
-        this.convertToPdfBtn.addEventListener('click', () => this.convertToPdf());
-    }
-
-    handleDragOver(e) {
-        e.preventDefault();
-        this.dropZone.classList.add('border-blue-400', 'bg-blue-50');
-    }
-
-    handleDrop(e) {
-        e.preventDefault();
-        this.dropZone.classList.remove('border-blue-400', 'bg-blue-50');
-        
-        const files = Array.from(e.dataTransfer.files);
-        this.processFiles(files);
-    }
-
-    handleFileSelect(e) {
-        const files = Array.from(e.target.files);
-        this.processFiles(files);
-    }
-
-    processFiles(files) {
-        const imageFiles = files.filter(file => this.supportedFormats.includes(file.type));
-        
-        if (imageFiles.length === 0) {
-            this.showError('Please select valid image files (JPG, PNG, GIF, BMP, WebP)');
-            return;
+// Image to PDF Converter App
+        // Image to PDF Converter App
+        const fileInput = document.getElementById('file-input');
+        const dropArea = document.getElementById('drop-area');
+        const preview = document.getElementById('preview');
+        const convertBtn = document.getElementById('convert-btn');
+        const downloadZipBtn = document.getElementById('download-zip-btn');
+        const convertedFiles = document.getElementById('converted-files');
+    
+        let images = [];
+    
+        const supportedTypes = [
+            'image/jpeg', 'image/png', 'image/jpg', 'image/gif', 'image/bmp', 'image/webp'
+        ];
+    
+        function updatePreview() {
+            preview.innerHTML = '';
+            images.forEach((img, idx) => {
+                const div = document.createElement('div');
+                div.className = 'relative group';
+                div.innerHTML = `
+                    <img src="${img.dataURL}" alt="Image ${idx + 1}" class="w-full h-32 object-cover rounded shadow" draggable="true" data-idx="${idx}" />
+                    <button class="absolute top-1 right-1 bg-red-600 text-white rounded-full p-1 text-xs opacity-80 hover:opacity-100" title="Remove" data-remove="${idx}">&times;</button>
+                    <div class="absolute bottom-1 left-1 flex gap-1">
+                        <button class="bg-gray-700 text-white rounded px-1 text-xs opacity-80 hover:opacity-100" title="Move Left" data-move="left" data-idx="${idx}">&#8592;</button>
+                        <button class="bg-gray-700 text-white rounded px-1 text-xs opacity-80 hover:opacity-100" title="Move Right" data-move="right" data-idx="${idx}">&#8594;</button>
+                    </div>
+                `;
+                preview.appendChild(div);
+            });
+            convertBtn.disabled = images.length === 0;
+            downloadZipBtn.disabled = images.length === 0;
         }
-
-        imageFiles.forEach(file => this.addImage(file));
-        this.updateUI();
-    }
-
-    addImage(file) {
-        const reader = new FileReader();
-        
-        reader.onload = (e) => {
-            const imageData = {
-                id: Date.now() + Math.random(),
-                file: file,
-                dataUrl: e.target.result,
-                name: file.name
-            };
-            
-            this.selectedImages.push(imageData);
-            this.renderImagePreview();
-            this.updateUI();
-        };
-        
-        reader.readAsDataURL(file);
-    }
-
-    renderImagePreview() {
-        this.imagePreview.innerHTML = '';
-        
-        this.selectedImages.forEach((image, index) => {
-            const imageElement = this.createImagePreviewElement(image, index);
-            this.imagePreview.appendChild(imageElement);
+    
+        function handleFiles(files) {
+            Array.from(files).forEach(file => {
+                if (!supportedTypes.includes(file.type)) return;
+                const reader = new FileReader();
+                reader.onload = e => {
+                    images.push({ file, dataURL: e.target.result });
+                    updatePreview();
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+    
+        dropArea.addEventListener('click', () => fileInput.click());
+        dropArea.addEventListener('dragover', e => {
+            e.preventDefault();
+            dropArea.classList.add('bg-blue-100');
         });
-    }
-
-    createImagePreviewElement(image, index) {
-        const div = document.createElement('div');
-        div.className = 'relative bg-white border rounded-lg p-2 shadow-sm hover:shadow-md transition-shadow';
-        
-        div.innerHTML = `
-            <div class="aspect-square overflow-hidden rounded-lg mb-2">
-                <img src="${image.dataUrl}" alt="${image.name}" class="w-full h-full object-cover">
-            </div>
-            <div class="text-xs text-gray-600 truncate mb-2" title="${image.name}">${image.name}</div>
-            <div class="flex justify-between items-center">
-                <span class="text-xs text-gray-500">#${index + 1}</span>
-                <div class="flex space-x-1">
-                    ${index > 0 ? '<button class="move-up-btn text-blue-600 hover:text-blue-800 text-sm" title="Move up">↑</button>' : ''}
-                    ${index < this.selectedImages.length - 1 ? '<button class="move-down-btn text-blue-600 hover:text-blue-800 text-sm" title="Move down">↓</button>' : ''}
-                    <button class="remove-btn text-red-600 hover:text-red-800 text-sm" title="Remove">✕</button>
-                </div>
-            </div>
-        `;
-
-        // Add event listeners for buttons
-        const removeBtn = div.querySelector('.remove-btn');
-        removeBtn.addEventListener('click', () => this.removeImage(image.id));
-
-        const moveUpBtn = div.querySelector('.move-up-btn');
-        if (moveUpBtn) {
-            moveUpBtn.addEventListener('click', () => this.moveImage(index, index - 1));
-        }
-
-        const moveDownBtn = div.querySelector('.move-down-btn');
-        if (moveDownBtn) {
-            moveDownBtn.addEventListener('click', () => this.moveImage(index, index + 1));
-        }
-
-        return div;
-    }
-
-    removeImage(imageId) {
-        this.selectedImages = this.selectedImages.filter(img => img.id !== imageId);
-        this.renderImagePreview();
-        this.updateUI();
-    }
-
-    moveImage(fromIndex, toIndex) {
-        if (toIndex < 0 || toIndex >= this.selectedImages.length) return;
-        
-        const [movedImage] = this.selectedImages.splice(fromIndex, 1);
-        this.selectedImages.splice(toIndex, 0, movedImage);
-        this.renderImagePreview();
-    }
-
-    clearAllImages() {
-        this.selectedImages = [];
-        this.renderImagePreview();
-        this.updateUI();
-        this.fileInput.value = '';
-    }
-
-    updateUI() {
+        dropArea.addEventListener('dragleave', e => {
+            e.preventDefault();
+            dropArea.classList.remove('bg-blue-100');
+        });
+dropArea.addEventListener('drop', e => {
+  e.preventDefault();
+  dropArea.classList.remove('bg-blue-100');
+  handleFiles(e.dataTransfer.files);
+});
+// (No trailing duplicate or class-based code)
         if (this.selectedImages.length > 0) {
             this.imagePreviewContainer.classList.remove('hidden');
         } else {
@@ -192,72 +109,158 @@ class ImageToPdfConverter {
                     maxHeight
                 );
                 
-                // Center the image on the page
-                const x = (pageWidth - width) / 2;
-                const y = (pageHeight - height) / 2;
-                
-                // Add image to PDF
-                pdf.addImage(image.dataUrl, 'JPEG', x, y, width, height);
-                
-                // Small delay to prevent blocking the UI
-                await this.delay(50);
-            }
-            
-            // Generate and download PDF
-            const fileName = `images-to-pdf-${new Date().toISOString().split('T')[0]}.pdf`;
-            pdf.save(fileName);
-            
-            this.hideProgress();
-            this.showSuccess(`PDF generated successfully! Downloaded as ${fileName}`);
-            
-        } catch (error) {
-            console.error('Error converting to PDF:', error);
-            this.hideProgress();
-            this.showError('Error converting images to PDF. Please try again.');
-        }
+                // Image to PDF Converter App
+                const fileInput = document.getElementById('file-input');
+                const dropArea = document.getElementById('drop-area');
+                const preview = document.getElementById('preview');
+                const convertBtn = document.getElementById('convert-btn');
+                const downloadZipBtn = document.getElementById('download-zip-btn');
+                const convertedFiles = document.getElementById('converted-files');
+
+                let images = [];
+
+                const supportedTypes = [
+                    'image/jpeg', 'image/png', 'image/jpg', 'image/gif', 'image/bmp', 'image/webp'
+                ];
+
+                function updatePreview() {
+                    preview.innerHTML = '';
+                    images.forEach((img, idx) => {
+                        const div = document.createElement('div');
+                        div.className = 'relative group';
+                        div.innerHTML = `
+                            <img src="${img.dataURL}" alt="Image ${idx + 1}" class="w-full h-32 object-cover rounded shadow" draggable="true" data-idx="${idx}" />
+                            <button class="absolute top-1 right-1 bg-red-600 text-white rounded-full p-1 text-xs opacity-80 hover:opacity-100" title="Remove" data-remove="${idx}">&times;</button>
+                            <div class="absolute bottom-1 left-1 flex gap-1">
+                                <button class="bg-gray-700 text-white rounded px-1 text-xs opacity-80 hover:opacity-100" title="Move Left" data-move="left" data-idx="${idx}">&#8592;</button>
+                                <button class="bg-gray-700 text-white rounded px-1 text-xs opacity-80 hover:opacity-100" title="Move Right" data-move="right" data-idx="${idx}">&#8594;</button>
+                            </div>
+                        `;
+                        preview.appendChild(div);
+                    });
+                    convertBtn.disabled = images.length === 0;
+                    downloadZipBtn.disabled = images.length === 0;
+                }
+
+                function handleFiles(files) {
+                    Array.from(files).forEach(file => {
+                        if (!supportedTypes.includes(file.type)) return;
+                        const reader = new FileReader();
+                        reader.onload = e => {
+                            images.push({ file, dataURL: e.target.result });
+                            updatePreview();
+                        };
+                        reader.readAsDataURL(file);
+                    });
+                }
+
     }
 
-    loadImage(src) {
-        return new Promise((resolve, reject) => {
-            const img = new Image();
-            img.onload = () => resolve(img);
-            img.onerror = reject;
-            img.src = src;
-        });
-    }
-
-    calculateDimensions(originalWidth, originalHeight, maxWidth, maxHeight) {
-        let width = originalWidth;
-        let height = originalHeight;
-        
-        // Scale down if larger than max dimensions
-        if (width > maxWidth) {
-            height = (height * maxWidth) / width;
-            width = maxWidth;
-        }
-        
-        if (height > maxHeight) {
-            width = (width * maxHeight) / height;
-            height = maxHeight;
-        }
-        
-        return { width, height };
-    }
-
-    delay(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
-    }
-
-    showProgress() {
-        this.progressContainer.classList.remove('hidden');
-        this.convertToPdfBtn.disabled = true;
-        this.convertToPdfBtn.textContent = 'Converting...';
-        this.convertToPdfBtn.classList.add('opacity-50', 'cursor-not-allowed');
-    }
-
+                    e.preventDefault();
+                    dropArea.classList.add('bg-blue-100');
+                });
     updateProgress(percentage) {
+                    e.preventDefault();
+                    dropArea.classList.remove('bg-blue-100');
+                });
         this.progressBar.style.width = `${percentage}%`;
+                    e.preventDefault();
+                    dropArea.classList.remove('bg-blue-100');
+                    handleFiles(e.dataTransfer.files);
+                });
+                fileInput.addEventListener('change', e => handleFiles(e.target.files));
+
+                preview.addEventListener('click', e => {
+                    if (e.target.dataset.remove !== undefined) {
+                        images.splice(Number(e.target.dataset.remove), 1);
+                        updatePreview();
+                    }
+                    if (e.target.dataset.move) {
+                        const idx = Number(e.target.dataset.idx);
+                        if (e.target.dataset.move === 'left' && idx > 0) {
+                            [images[idx - 1], images[idx]] = [images[idx], images[idx - 1]];
+                            updatePreview();
+                        }
+                        if (e.target.dataset.move === 'right' && idx < images.length - 1) {
+                            [images[idx + 1], images[idx]] = [images[idx], images[idx + 1]];
+                            updatePreview();
+                        }
+                    }
+                });
+
+                convertBtn.addEventListener('click', async () => {
+                    if (images.length === 0) return;
+                    const { jsPDF } = window.jspdf;
+                    const pdf = new jsPDF();
+                    for (let i = 0; i < images.length; i++) {
+                        const img = images[i];
+                        const imgProps = pdf.getImageProperties(img.dataURL);
+                        const pdfWidth = pdf.internal.pageSize.getWidth();
+                        const pdfHeight = pdf.internal.pageSize.getHeight();
+                        let width = imgProps.width;
+                        let height = imgProps.height;
+                        // Scale to fit page
+                        const ratio = Math.min(pdfWidth / width, pdfHeight / height);
+                        width *= ratio;
+                        height *= ratio;
+                        const x = (pdfWidth - width) / 2;
+                        const y = (pdfHeight - height) / 2;
+                        pdf.addImage(img.dataURL, imgProps.fileType, x, y, width, height);
+                        if (i < images.length - 1) pdf.addPage();
+                    }
+                    const pdfBlob = pdf.output('blob');
+                    const pdfUrl = URL.createObjectURL(pdfBlob);
+                    const fileName = `images-to-pdf-${Date.now()}.pdf`;
+                    showConvertedFiles([{ name: fileName, url: pdfUrl }]);
+                    // Auto download
+                    const a = document.createElement('a');
+                    a.href = pdfUrl;
+                    a.download = fileName;
+                    a.click();
+                });
+
+                function showConvertedFiles(files) {
+                    convertedFiles.innerHTML = '<h2 class="font-semibold mb-2">Converted Files</h2>' +
+                        files.map(f => `<a href="${f.url}" download="${f.name}" class="block text-blue-600 underline mb-1">${f.name}</a>`).join('');
+                }
+
+                // Download images as ZIP
+                // Uses JSZip CDN
+                function loadJSZip() {
+                    return new Promise((resolve, reject) => {
+                        if (window.JSZip) return resolve(window.JSZip);
+                        const script = document.createElement('script');
+                        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js';
+                        script.onload = () => resolve(window.JSZip);
+                        script.onerror = reject;
+                        document.body.appendChild(script);
+                    });
+                }
+
         this.progressText.textContent = `${Math.round(percentage)}%`;
+                    if (images.length === 0) return;
+                    const JSZip = await loadJSZip();
+                    const zip = new JSZip();
+                    images.forEach((img, idx) => {
+                        // Convert dataURL to blob
+                        const arr = img.dataURL.split(',');
+                        const mime = arr[0].match(/:(.*?);/)[1];
+                        const bstr = atob(arr[1]);
+                        let n = bstr.length;
+                        const u8arr = new Uint8Array(n);
+                        while (n--) u8arr[n] = bstr.charCodeAt(n);
+                        zip.file(`image${idx + 1}.${mime.split('/')[1]}`, new Blob([u8arr], { type: mime }));
+                    });
+                    const blob = await zip.generateAsync({ type: 'blob' });
+                    const url = URL.createObjectURL(blob);
+                    const fileName = `images-${Date.now()}.zip`;
+                    showConvertedFiles([{ name: fileName, url }]);
+                    // Auto download
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = fileName;
+                    a.click();
+                });
     }
 
     hideProgress() {

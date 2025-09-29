@@ -1,59 +1,31 @@
 # Image to PDF Converter
 
-A modern, client-side web application that converts multiple image files into a single PDF document. Built with HTML5, Tailwind CSS, and vanilla JavaScript.
+A simple, privacy-friendly web app to convert multiple images (JPG, PNG, JPEG, GIF, BMP, WebP) into a single PDF document. All processing is done client-side in your browser.
 
 ## Features
+- Multiple image upload (drag-and-drop or file picker)
+- Image preview with remove and reorder options
+- Supported formats: JPG, JPEG, PNG, GIF, BMP, WebP
+- Client-side PDF generation (no server upload)
+- Download PDF or all images as a ZIP file
+- Responsive, modern UI (Tailwind CSS)
 
-- **Multiple Image Upload:** Support for drag-and-drop and file picker
-- **Image Preview:** View thumbnails of selected images
-- **Image Management:** Remove or reorder images before conversion
-- **Image Formats Supported:** JPG, JPEG, PNG, GIF, BMP, and WebP
-- **Client-Side Processing:** 100% privacy - no data leaves your browser
-- **PDF Download:** Automatic download of generated PDF
-- **Responsive Design:** Works on desktop and mobile devices
+## Usage
+1. Open `index.html` in your browser.
+2. Drag and drop or select images.
+3. Preview, remove, or reorder images as needed.
+4. Click "Convert to PDF" to download the PDF.
+5. Or click "Download Images as ZIP" to get all images in a zip file.
 
 ## Technologies Used
+- HTML5
+- Tailwind CSS (via CDN)
+- Vanilla JavaScript
+- [jsPDF](https://github.com/parallax/jsPDF) (via CDN)
+- [JSZip](https://stuk.github.io/jszip/) (via CDN, loaded on demand)
 
-- **HTML5:** Semantic structure for accessibility
-- **Tailwind CSS:** Modern, responsive styling
-- **Vanilla JavaScript:** Client-side functionality
-- **jsPDF:** PDF generation library
-
-## How to Use
-
-1. Open the application in your web browser
-2. Click the upload area or drag and drop image files
-3. Preview and manage your selected images
-4. Click "Convert to PDF" to generate the PDF
-5. Download automatically starts
-
-## Privacy & Security
-
-- All processing happens locally in your browser
-- No images are uploaded to any server
-- Your data remains completely private
-
-## Browser Compatibility
-
-- Chrome (recommended)
-- Firefox
-- Safari
-- Edge
-
-## Installation
-
-No installation required. Simply open `index.html` in a modern web browser.
-
-## File Structure
-
-```
-image-to-pdf-converter/
-├── index.html          # Main HTML file
-├── js/
-│   └── app.js          # JavaScript functionality
-└── README.md           # This file
-```
+## Security & Privacy
+- All processing is local to your browser. No files are uploaded.
 
 ## License
-
-Part of the TechnoMind AI tools collection - MIT License
+MIT
