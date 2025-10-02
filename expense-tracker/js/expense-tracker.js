@@ -376,18 +376,35 @@ class ExpenseTracker {
                         <span class="text-sm font-bold text-gray-800">${this.formatCurrency(expense.amount)}</span>
                     </td>
                     <td class="px-4 py-3 text-center">
-                        <button onclick="expenseTracker.showExpenseModal('${expense.id}')" 
-                            class="text-blue-600 hover:text-blue-800 mr-2" title="Edit">
+                        <button 
+                            class="text-blue-600 hover:text-blue-800 mr-2 expense-edit-btn" title="Edit"
+                            data-id="${expense.id}">
                             ✏️
                         </button>
-                        <button onclick="expenseTracker.deleteExpense('${expense.id}')" 
-                            class="text-red-600 hover:text-red-800" title="Delete">
+                        <button 
+                            class="text-red-600 hover:text-red-800 expense-delete-btn" title="Delete"
+                            data-id="${expense.id}">
                             🗑️
                         </button>
                     </td>
                 </tr>
             `;
         }).join('');
+        // Attach event listeners to edit and delete buttons
+        // Edit buttons
+        tbody.querySelectorAll('.expense-edit-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const id = btn.getAttribute('data-id');
+                this.showExpenseModal(id);
+            });
+        });
+        // Delete buttons
+        tbody.querySelectorAll('.expense-delete-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const id = btn.getAttribute('data-id');
+                this.deleteExpense(id);
+            });
+        });
     }
 
     renderCharts() {
