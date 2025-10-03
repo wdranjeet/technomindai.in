@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Generator - Secure & Strong Passwords</title>
+    <meta name="description" content="Generate cryptographically secure passwords with customizable length and character types. Free, fast, and completely private.">
+    <link rel="stylesheet" href="../css/styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <a href="/index.html" class="flex items-center space-x-2">
+                        <div class="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
+                            <span class="text-white font-bold">⚡</span>
+                        </div>
+                        <h1 class="text-xl font-bold text-gray-800">TechnoMind AI</h1>
+                    </a>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="/index.html" class="text-gray-600 hover:text-blue-600 transition-colors font-semibold">Home</a>
+                    <a href="/index.html#tools" class="text-gray-600 hover:text-blue-600 transition-colors">Tools</a>
+                    <a href="/index.html#about" class="text-gray-600 hover:text-blue-600 transition-colors">About</a>
+                    <a href="/index.html#contact" class="text-gray-600 hover:text-blue-600 transition-colors">Contact</a>
+                </div>
+                <button id="mobile-menu-btn" class="md:hidden">
+                    <span class="text-2xl text-gray-600">☰</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg">
+        <div class="container mx-auto px-4 py-4 space-y-3">
+            <a href="/index.html" class="block text-gray-600 hover:text-blue-600 transition-colors font-semibold">Home</a>
+            <a href="/index.html#tools" class="block text-gray-600 hover:text-blue-600 transition-colors">Tools</a>
+            <a href="/index.html#about" class="block text-gray-600 hover:text-blue-600 transition-colors">About</a>
+            <a href="/index.html#contact" class="block text-gray-600 hover:text-blue-600 transition-colors">Contact</a>
+        </div>
+    </div>
+
+    <div class="container mx-auto px-4 max-w-4xl pt-8 pb-16">
+        <!-- Page Title -->
+        <header class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-gray-800 mb-2">Password Generator</h1>
+            <p class="text-gray-600">Create cryptographically secure passwords with customizable options</p>
+        </header>
+
+        <!-- Main Content -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <!-- Generated Password Display -->
+            <div class="mb-6">
+                <label for="passwordDisplay" class="block text-sm font-medium text-gray-700 mb-2">
+                    Generated Password
+                </label>
+                <div class="relative">
+                    <input 
+                        type="text" 
+                        id="passwordDisplay" 
+                        readonly
+                        placeholder="Click 'Generate Password' to create a secure password"
+                        class="w-full p-4 pr-24 border border-gray-300 rounded-lg font-mono text-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        aria-label="Generated password"
+                    />
+                    <div class="absolute right-2 top-1/2 transform -translate-y-1/2 flex gap-2">
+                        <button 
+                            id="togglePasswordBtn" 
+                            class="p-2 text-gray-600 hover:text-gray-800 transition-colors"
+                            title="Show/Hide Password"
+                            aria-label="Toggle password visibility"
+                        >
+                            <span id="toggleIcon">👁️</span>
+                        </button>
+                        <button 
+                            id="copyBtn" 
+                            class="p-2 text-blue-600 hover:text-blue-800 transition-colors"
+                            title="Copy to Clipboard"
+                            aria-label="Copy password to clipboard"
+                        >
+                            📋
+                        </button>
+                    </div>
+                </div>
+                <!-- Password Strength Indicator -->
+                <div class="mt-2">
+                    <div class="flex items-center justify-between mb-1">
+                        <span class="text-sm text-gray-600">Password Strength:</span>
+                        <span id="strengthText" class="text-sm font-semibold">-</span>
+                    </div>
+                    <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
+                        <div id="strengthBar" class="h-full transition-all duration-300" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Password Options -->
+            <div class="mb-6">
+                <div class="flex items-center justify-between mb-2">
+                    <label for="lengthSlider" class="text-sm font-medium text-gray-700">
+                        Password Length: <span id="lengthValue" class="text-blue-600 font-bold">16</span>
+                    </label>
+                </div>
+                <input 
+                    type="range" 
+                    id="lengthSlider" 
+                    min="4" 
+                    max="128" 
+                    value="16"
+                    class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
+                    aria-label="Password length slider"
+                />
+                <div class="flex justify-between text-xs text-gray-500 mt-1">
+                    <span>4</span>
+                    <span>128</span>
+                </div>
+            </div>
+
+            <!-- Character Type Options -->
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700 mb-3">Character Types</label>
+                <div class="space-y-3">
+                    <label class="flex items-center p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" id="includeUppercase" checked class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500">
+                        <span class="ml-3 text-gray-700">Uppercase Letters (A-Z)</span>
+                    </label>
+                    <label class="flex items-center p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" id="includeLowercase" checked class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500">
+                        <span class="ml-3 text-gray-700">Lowercase Letters (a-z)</span>
+                    </label>
+                    <label class="flex items-center p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" id="includeNumbers" checked class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500">
+                        <span class="ml-3 text-gray-700">Numbers (0-9)</span>
+                    </label>
+                    <label class="flex items-center p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" id="includeSpecial" checked class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500">
+                        <span class="ml-3 text-gray-700">Special Characters (!@#$%^&*-=+_?)</span>
+                    </label>
+                    <label class="flex items-center p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition-colors">
+                        <input type="checkbox" id="excludeSimilar" class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500">
+                        <span class="ml-3 text-gray-700">Exclude Similar Characters (0, O, 1, l, I)</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex gap-3">
+                <button 
+                    id="generateBtn" 
+                    class="flex-1 bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 transition-colors shadow-md hover:shadow-lg"
+                >
+                    🔐 Generate Password
+                </button>
+                <button 
+                    id="resetBtn" 
+                    class="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg font-semibold hover:bg-gray-50 transition-colors"
+                >
+                    Reset
+                </button>
+            </div>
+
+            <!-- Notification Toast -->
+            <div id="notification" class="hidden fixed top-20 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-fade-in">
+                <span id="notificationText">Password copied to clipboard!</span>
+            </div>
+        </div>
+
+        <!-- Multiple Passwords Section -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-xl font-bold text-gray-800">Generate Multiple Passwords</h2>
+                <input 
+                    type="number" 
+                    id="multipleCount" 
+                    min="2" 
+                    max="10" 
+                    value="5"
+                    class="w-20 p-2 border border-gray-300 rounded-lg text-center"
+                />
+            </div>
+            <button 
+                id="generateMultipleBtn" 
+                class="w-full bg-purple-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-purple-700 transition-colors shadow-md hover:shadow-lg mb-4"
+            >
+                Generate Multiple Passwords
+            </button>
+            <div id="multiplePasswordsContainer" class="space-y-2"></div>
+        </div>
+
+        <!-- Password History Section -->
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-xl font-bold text-gray-800">Password History</h2>
+                <button 
+                    id="clearHistoryBtn" 
+                    class="text-red-600 hover:text-red-800 text-sm font-semibold"
+                >
+                    Clear History
+                </button>
+            </div>
+            <div id="historyContainer" class="space-y-2">
+                <p class="text-gray-500 text-center py-4">No passwords generated yet</p>
+            </div>
+        </div>
+
+        <!-- Security Information -->
+        <div class="bg-blue-50 rounded-lg p-6 mt-6">
+            <h3 class="text-lg font-bold text-blue-900 mb-3">🔒 Security & Privacy</h3>
+            <ul class="space-y-2 text-blue-800 text-sm">
+                <li class="flex items-start">
+                    <span class="mr-2">✓</span>
+                    <span><strong>Cryptographically Secure:</strong> Uses window.crypto.getRandomValues() for true randomness</span>
+                </li>
+                <li class="flex items-start">
+                    <span class="mr-2">✓</span>
+                    <span><strong>100% Private:</strong> All password generation happens locally in your browser</span>
+                </li>
+                <li class="flex items-start">
+                    <span class="mr-2">✓</span>
+                    <span><strong>No Data Transmission:</strong> Passwords are never sent to any server</span>
+                </li>
+                <li class="flex items-start">
+                    <span class="mr-2">✓</span>
+                    <span><strong>Session Storage Only:</strong> History is stored temporarily and cleared when you close the tab</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-3 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
+                            <span class="text-white font-bold">⚡</span>
+                        </div>
+                        <h3 class="text-xl font-bold">TechnoMind AI</h3>
+                    </div>
+                    <p class="text-gray-400">Modern tools for productivity, finance, and more.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/index.html#tools" class="text-gray-400 hover:text-white transition-colors">All Tools</a></li>
+                        <li><a href="/index.html#featured" class="text-gray-400 hover:text-white transition-colors">Featured</a></li>
+                        <li><a href="/index.html#about" class="text-gray-400 hover:text-white transition-colors">About</a></li>                        
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Categories</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Productivity</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Finance</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Documents</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">System Utils</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 TechnoMind AI. Built with ❤️ for the community.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+
+    <!-- Mobile menu and scroll effect scripts -->
+    <script>
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('shadow-md');
+            } else {
+                nav.classList.remove('shadow-md');
+            }
+        });
+    </script>
+</body>
+</html>
